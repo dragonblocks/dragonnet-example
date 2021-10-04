@@ -1,0 +1,5 @@
+PingPacket
+	s32 number
+
+PongPacket
+	s32 number

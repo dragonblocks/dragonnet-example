@@ -1,0 +1,12 @@
+[submodule "deps/dragonnet"]
+	path = deps/dragonnet
+	url = git@github.com:dragonblocks/dragonnet
+[submodule "deps/dragontype"]
+	path = deps/dragontype
+	url = git@github.com:dragonblocks/dragontype
+[submodule "deps/dragonport"]
+	path = deps/dragonport
+	url = git@github.com:dragonblocks/dragonport
+[submodule "deps/endian.h"]
+	path = deps/endian.h
+	url = git@github.com:mikepb/endian.h
