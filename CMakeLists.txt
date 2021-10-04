@@ -10,8 +10,6 @@ link_libraries(
 
 set(DEPS_DIR "${CMAKE_SOURCE_DIR}/deps/")
 
-add_compile_definitions(DRAGONTYPE_ENDIAN_HEADER="${DEPS_DIR}/endian.h/endian.h")
-
 include_directories(SYSTEM
 	${DEPS_DIR}
 )
