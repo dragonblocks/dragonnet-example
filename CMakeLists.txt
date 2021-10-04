@@ -46,16 +46,9 @@ add_custom_target(ExampleTypes
 	DEPENDS "${CMAKE_SOURCE_DIR}/dnet-types.h"
 )
 
-add_executable(ExampleClient
+add_executable(ExampleCS
 	${SOURCES_COMMON}
-	client.c
+	cs_example.c
 )
 
-add_dependencies(ExampleClient ExampleTypes)
-
-add_executable(ExampleServer
-	${SOURCES_COMMON}
-	server.c
-)
-
-add_dependencies(ExampleServer ExampleTypes)
+add_dependencies(ExampleCS ExampleTypes)
