@@ -32,11 +32,16 @@ add_executable(DragonnetGenMessages
 	"${DEPS_DIR}/dragonnet/gen_messages.c"
 )
 
-add_custom_target(ExampleMessages
+add_custom_command(
+	OUTPUT "${CMAKE_SOURCE_DIR}/messages.h"
 	COMMAND "${CMAKE_BINARY_DIR}/DragonnetGenMessages"
-	BYPRODUCTS "${CMAKE_SOURCE_DIR}/messages.h"
-	DEPENDS DragonnetGenMessages "${CMAKE_SOURCE_DIR}/messages.dnet"
+	MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/messages.dnet"
+	DEPENDS DragonnetGenMessages
 	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+)
+
+add_custom_target(ExampleMessages
+	DEPENDS "${CMAKE_SOURCE_DIR}/messages.h"
 )
 
 add_executable(ExampleClient
