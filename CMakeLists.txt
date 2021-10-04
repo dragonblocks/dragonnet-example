@@ -17,7 +17,11 @@ include_directories(SYSTEM
 add_compile_options(-Wall -Wextra -Werror -fmax-errors=4)
 
 set(SOURCES_COMMON
-	"${DEPS_DIR}/dragontype/implementation.c"
+	"${DEPS_DIR}/dragontype/array.c"
+	"${DEPS_DIR}/dragontype/bintree.c"
+	"${DEPS_DIR}/dragontype/list.c"
+	"${DEPS_DIR}/dragontype/number.c"
+	"${DEPS_DIR}/dragontype/queue.c"
 	"${DEPS_DIR}/dragonport/asprintf.c"
 	"${DEPS_DIR}/dragonnet/addr.c"
 	"${DEPS_DIR}/dragonnet/listen.c"
