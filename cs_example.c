@@ -18,7 +18,7 @@ static void connect_func(DragonnetPeer *p)
 	l = NULL;
 }
 
-static void *srv_func()
+static void *srv_func(__attribute((unused)) void *unused)
 {
 	l = dragonnet_listener_new("[::1]:50000", &connect_func);
 	assert(l != NULL);
@@ -27,7 +27,7 @@ static void *srv_func()
 	return NULL;
 }
 
-static void *clt_func()
+static void *clt_func(__attribute((unused)) void *unused)
 {
 	DragonnetPeer *p = dragonnet_connect("[::1]:50000");
 	assert(p != NULL);
@@ -38,7 +38,7 @@ static void *clt_func()
 	return NULL;
 }
 
-int main()
+int main(__attribute((unused)) int argc, __attribute((unused)) char **argv)
 {
 	pthread_t srv_thread, clt_thread;
 	pthread_create(&srv_thread, NULL, &srv_func, NULL);
