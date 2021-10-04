@@ -42,7 +42,7 @@ add_custom_command(
 	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
 )
 
-add_custom_target(ExampleMessages
+add_custom_target(ExampleTypes
 	DEPENDS "${CMAKE_SOURCE_DIR}/dnet-types.h"
 )
 
@@ -51,11 +51,11 @@ add_executable(ExampleClient
 	client.c
 )
 
-add_dependencies(ExampleClient ExampleMessages)
+add_dependencies(ExampleClient ExampleTypes)
 
 add_executable(ExampleServer
 	${SOURCES_COMMON}
 	server.c
 )
 
-add_dependencies(ExampleServer ExampleMessages)
+add_dependencies(ExampleServer ExampleTypes)
