@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "messages.h"
+#include "dnet-types.h"
 
 int main()
 {

@@ -29,21 +29,21 @@ set(SOURCES_COMMON
 	"${DEPS_DIR}/dragonnet/recv_thread.c"
 )
 
-add_executable(DragonnetGenMessages
+add_executable(DragonnetTypegen
 	${SOURCES_COMMON}
-	"${DEPS_DIR}/dragonnet/gen_messages.c"
+	"${DEPS_DIR}/dragonnet/typegen/main.c"
 )
 
 add_custom_command(
-	OUTPUT "${CMAKE_SOURCE_DIR}/messages.h"
-	COMMAND "${CMAKE_BINARY_DIR}/DragonnetGenMessages"
-	MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/messages.dnet"
-	DEPENDS DragonnetGenMessages
+	OUTPUT "${CMAKE_SOURCE_DIR}/dnet-types.h"
+	COMMAND "${CMAKE_BINARY_DIR}/DragonnetTypegen"
+	MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/types.dnet"
+	DEPENDS DragonnetTypegen
 	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
 )
 
 add_custom_target(ExampleMessages
-	DEPENDS "${CMAKE_SOURCE_DIR}/messages.h"
+	DEPENDS "${CMAKE_SOURCE_DIR}/dnet-types.h"
 )
 
 add_executable(ExampleClient
