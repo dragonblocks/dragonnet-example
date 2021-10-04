@@ -10,6 +10,5 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 DragonnetTypegen
-ExampleClient
-ExampleServer
+ExampleCS
 dnet-types.h
