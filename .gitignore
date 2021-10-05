@@ -11,4 +11,5 @@ CTestTestfile.cmake
 _deps
 DragonnetTypegen
 ExampleCS
+dnet-types.c
 dnet-types.h

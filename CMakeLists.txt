@@ -26,7 +26,9 @@ set(SOURCES_COMMON
 	"${DEPS_DIR}/dragonnet/addr.c"
 	"${DEPS_DIR}/dragonnet/listen.c"
 	"${DEPS_DIR}/dragonnet/peer.c"
+	"${DEPS_DIR}/dragonnet/recv.c"
 	"${DEPS_DIR}/dragonnet/recv_thread.c"
+	"${DEPS_DIR}/dragonnet/send.c"
 )
 
 add_executable(DragonnetTypegen
@@ -35,7 +37,7 @@ add_executable(DragonnetTypegen
 )
 
 add_custom_command(
-	OUTPUT "${CMAKE_SOURCE_DIR}/dnet-types.h"
+	OUTPUT "${CMAKE_SOURCE_DIR}/dnet-types.c" "${CMAKE_SOURCE_DIR}/dnet-types.h"
 	COMMAND "${CMAKE_BINARY_DIR}/DragonnetTypegen"
 	MAIN_DEPENDENCY "${CMAKE_SOURCE_DIR}/types.dnet"
 	DEPENDS DragonnetTypegen
@@ -43,7 +45,7 @@ add_custom_command(
 )
 
 add_custom_target(ExampleTypes
-	DEPENDS "${CMAKE_SOURCE_DIR}/dnet-types.h"
+	DEPENDS "${CMAKE_SOURCE_DIR}/dnet-types.c" "${CMAKE_SOURCE_DIR}/dnet-types.h"
 )
 
 add_executable(ExampleCS
