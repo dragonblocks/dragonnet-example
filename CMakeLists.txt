@@ -50,6 +50,7 @@ add_custom_target(ExampleTypes
 
 add_executable(ExampleCS
 	${SOURCES_COMMON}
+	dnet-types.c
 	cs_example.c
 )
 
