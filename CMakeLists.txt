@@ -23,6 +23,9 @@ set(SOURCES_COMMON
 	"${DEPS_DIR}/dragontype/number.c"
 	"${DEPS_DIR}/dragontype/queue.c"
 	"${DEPS_DIR}/dragonport/asprintf.c"
+)
+
+set(SOURCES_DRAGONNET
 	"${DEPS_DIR}/dragonnet/addr.c"
 	"${DEPS_DIR}/dragonnet/listen.c"
 	"${DEPS_DIR}/dragonnet/peer.c"
@@ -50,6 +53,7 @@ add_custom_target(ExampleTypes
 
 add_executable(ExampleCS
 	${SOURCES_COMMON}
+	${SOURCES_DRAGONNET}
 	dnet-types.c
 	cs_example.c
 )

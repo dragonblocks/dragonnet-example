@@ -15,41 +15,37 @@ static void connect_func(DragonnetPeer *p)
 	free(str_addr);
 }
 
-static void recv_type_func(DragonnetPeer *p, u16 type_id)
+static void handle_pingpacket(DragonnetPeer *p, PingPacket *ping)
 {
-	char *str_addr = dragonnet_addr_str(p->raddr);
-	printf("type %d from %s\n", type_id, str_addr);
-	free(str_addr);
+	printf("PingPacket number: 0x%08x\n", ping->number);
 
-	if (type_id == DRAGONNET_TYPE_PINGPACKET) {
-		PingPacket ping = dragonnet_peer_recv_PingPacket(p);
-		printf("PingPacket number: 0x%08x\n", ping.number);
+	dragonnet_peer_send_PongPacket(p, &(PongPacket) {
+		.number = ping->number
+	});
 
-		PongPacket pong = {
-			.number = ping.number
-		};
-		dragonnet_peer_send_PongPacket(p, pong);
+	dragonnet_listener_close(l);
+	dragonnet_listener_delete(l);
+	l = NULL;
 
-		dragonnet_listener_close(l);
-		dragonnet_listener_delete(l);
-		l = NULL;
+	dragonnet_peer_close(p);
+	dragonnet_peer_delete(p);
+}
 
-		dragonnet_peer_close(p);
-		dragonnet_peer_delete(p);
-	} else if (type_id == DRAGONNET_TYPE_PONGPACKET) {
-		PongPacket pong = dragonnet_peer_recv_PongPacket(p);
-		printf("PongPacket number: 0x%08x\n", pong.number);
+static void handle_pongpacket(DragonnetPeer *p, PongPacket *pong)
+{
+	printf("PongPacket number: 0x%08x\n", pong->number);
 
-		dragonnet_peer_close(p);
-		dragonnet_peer_delete(p);
-	}
+	dragonnet_peer_close(p);
+	dragonnet_peer_delete(p);
 }
 
 static void *srv_func(__attribute((unused)) void *unused)
 {
-	l = dragonnet_listener_new("[::1]:50000", &connect_func, &recv_type_func);
+	l = dragonnet_listener_new("[::1]:50000", &connect_func);
 	assert(l != NULL);
 
+	dragonnet_listener_set_recv_hook(l, DRAGONNET_TYPE_PINGPACKET,
+			(void (*)(DragonnetPeer *, void *)) &handle_pingpacket);
 	dragonnet_listener_run(l);
 	return NULL;
 }
@@ -58,15 +54,16 @@ static void *clt_func(__attribute((unused)) void *unused)
 {
 	while (l == NULL);
 
-	DragonnetPeer *p = dragonnet_connect("[::1]:50000", &recv_type_func);
+	DragonnetPeer *p = dragonnet_connect("[::1]:50000");
 	assert(p != NULL);
 
+	dragonnet_peer_set_recv_hook(p, DRAGONNET_TYPE_PONGPACKET,
+			(void (*)(DragonnetPeer *, void *)) &handle_pongpacket);
 	dragonnet_peer_run(p);
 
-	PingPacket ping = {
+	dragonnet_peer_send_PingPacket(p, &(PingPacket) {
 		.number = 0xdba
-	};
-	dragonnet_peer_send_PingPacket(p, ping);
+	});
 
 	return NULL;
 }
