@@ -6,6 +6,7 @@ set(CMAKE_BUILD_TYPE Debug)
 
 link_libraries(
 	pthread
+	z
 )
 
 set(DEPS_DIR "${CMAKE_SOURCE_DIR}/deps/")

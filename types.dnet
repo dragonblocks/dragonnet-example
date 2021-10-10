@@ -1,5 +1,5 @@
 PingPacket
-	s32 number
+	CompressedBlob compr_blob
 
 PongPacket
 	s32 number
