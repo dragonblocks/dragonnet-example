@@ -17,10 +17,14 @@ static void connect_func(DragonnetPeer *p)
 
 static void handle_pingpacket(DragonnetPeer *p, PingPacket *ping)
 {
-	printf("PingPacket siz: 0x%08x\n", ping->compr_blob->siz);
-	printf("PingPacket compr_siz: 0x%08x\n", ping->compr_blob->compr_siz);
-	printf("PingPacket data: 0x%02x%02x\n", ping->compr_blob->data[0], ping->compr_blob->data[1]);
-	free(ping->compr_blob->data);
+	Blob blob = ping->compr_blob->blob;
+
+	printf("PingPacket siz: 0x%08x\n", blob->siz);
+	printf("PingPacket compr_siz: 0x%08x\n", ping->compr_blob->siz);
+	printf("PingPacket data: 0x%02x%02x\n", blob->data[0], blob->data[1]);
+
+	free(blob->data);
+	free(blob);
 
 	dragonnet_peer_send_PongPacket(p, &(PongPacket) {
 		.number = 0xdba
@@ -64,15 +68,17 @@ static void *clt_func(__attribute((unused)) void *unused)
 			(void (*)(DragonnetPeer *, void *)) &handle_pongpacket);
 	dragonnet_peer_run(p);
 
-	CompressedBlob blob = malloc(sizeof *blob);
-	blob->siz = 2;
-	blob->data = (u8 *) "\x0d\xba";
+	CompressedBlob compr_blob = malloc(sizeof *compr_blob);
+	compr_blob->blob = malloc(sizeof *compr_blob->blob);
+	compr_blob->blob->siz = 2;
+	compr_blob->blob->data = (u8 *) "\x0d\xba";
 
 	dragonnet_peer_send_PingPacket(p, &(PingPacket) {
-		.compr_blob = blob
+		.compr_blob = compr_blob
 	});
 
-	free(blob);
+	free(compr_blob->blob);
+	free(compr_blob);
 	return NULL;
 }
 
