@@ -67,10 +67,12 @@ static void *clt_func(__attribute((unused)) void *unused)
 	CompressedBlob blob = malloc(sizeof *blob);
 	blob->siz = 2;
 	blob->data = (u8 *) "\x0d\xba";
+
 	dragonnet_peer_send_PingPacket(p, &(PingPacket) {
 		.compr_blob = blob
 	});
 
+	free(blob);
 	return NULL;
 }
 
