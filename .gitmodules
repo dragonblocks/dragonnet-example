@@ -9,4 +9,4 @@
 	url = git@github.com:dragonblocks/dragonport
 [submodule "deps/endian.h"]
 	path = deps/endian.h
-	url = git@github.com:mikepb/endian.h
+	url = git@github.com:dragonblocks/endian.h
