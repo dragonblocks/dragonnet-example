@@ -4,3 +4,4 @@ PingPacket
 PongPacket
 	s32 number
 	u8 num_array[2]
+	u8 nested_array[2][2]
