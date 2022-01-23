@@ -27,7 +27,8 @@ static void handle_pingpacket(DragonnetPeer *p, PingPacket *ping)
 	free(blob);
 
 	dragonnet_peer_send_PongPacket(p, &(PongPacket) {
-		.number = 0xdba
+		.number = 0xdba,
+		.num_array = {0xd, 0xba}
 	});
 
 	dragonnet_listener_close(l);
@@ -41,6 +42,8 @@ static void handle_pingpacket(DragonnetPeer *p, PingPacket *ping)
 static void handle_pongpacket(DragonnetPeer *p, PongPacket *pong)
 {
 	printf("PongPacket number: 0x%08x\n", pong->number);
+	printf("PongPacket num_array[0]: 0x%02x\n", pong->num_array[0]);
+	printf("PongPacket num_array[1]: 0x%02x\n", pong->num_array[1]);
 
 	dragonnet_peer_close(p);
 	dragonnet_peer_delete(p);
